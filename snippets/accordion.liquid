@@ -1,0 +1,32 @@
+<style>
+  .accordion summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  [data-minus] {
+    display: none;
+  }
+
+  details[open] > summary [data-plus] {
+    display: none;
+  }
+  
+  details[open] > summary [data-minus] {
+    display: block;
+  }
+</style>
+
+<details class="accordion {{ classes }}">
+  <summary>
+    {% if title_link %}
+      <a href="{{ title_link }}">{{ title }}</a>
+    {% else %}
+      <div>{{ title }}</div>
+    {% endif %}
+    <div data-plus>+</div>
+    <div class="hidden" data-minus>-</div>
+  </summary>
+  <div class="accordion__content">{{ content }}</div>
+</details>

@@ -1,0 +1,11 @@
+{% assign image = collection.image %}
+{% if collection.metafields.custom.menu_image != blank %}
+  {% assign image = collection.metafields.custom.menu_image %}
+{% endif %}
+
+<a class="menu-collection-card" href="{{ collection.url }}">
+  {{ image | image_url: width: 500 | image_tag: class: "menu-collection-card__image" }}
+  <div class="menu-collection-card__title">
+    {{ collection.title }}
+  </div>
+</a>

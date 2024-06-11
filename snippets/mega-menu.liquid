@@ -1,0 +1,330 @@
+<style>
+  .mms__wrapper {
+    position: relative;
+    z-index: 101;
+    --accent: #ffdc4a;
+    --grey: #2f2d29;
+  }
+
+  .mms {
+    width: 100%;
+    background: var(--grey);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    gap: 0px 28px;
+    flex-wrap: wrap;
+  }
+
+  .mms__el-wrapper {
+    padding: 10px 0;
+  }
+
+  .mms__top-link {
+    cursor: pointer;
+    color: white;
+    transition: 200ms;
+    font-weight: 600;
+  }
+
+  .mms__top-link.pipe {
+    cursor: default;
+    color: var(--accent);
+  }
+
+  .mms__top-link.active {
+    color: var(--accent);
+  }
+
+  .mms__block {
+    opacity: 0;
+    max-width: min(95%, {{ section.settings.max_width }}px);
+    margin: 0 auto;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #F0F0F0;
+    width: 100%;
+    box-shadow: 0 5px 20px #0000004d;
+    transition: 200ms;
+    z-index: -1;
+    border-radius: 4px;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .mms__block:has(.mms__single-mega) {
+    width: auto;
+    max-width: 95%;
+  }
+
+  .mms__block.active {
+    opacity: 1;
+    z-index: 101;
+    height: auto;
+  }
+
+  .mms__block-inner {
+    display: flex;
+  }
+
+  .mms__left {
+    border-right: 1px solid var(--accent);
+    width: 25%;
+    text-transform: uppercase;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    background: var(--grey);
+    color: rgba(255,255,255,0.65);
+    border-radius: 4px 0 0 4px;
+    overflow: hidden;
+  }
+
+  .mms__left-title {
+    cursor: pointer;
+    padding: 12px;
+    padding-right: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: 100ms;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .mms__left-title.active {
+    background: var(--accent);
+    color: black;
+  }
+
+  .mms__right {
+    width: 75%;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .mms__right-block {
+    display: none;
+    padding: 20px 32px;
+  }
+
+  .mms__right-block.active {
+    display: block;
+  }
+
+  .mfp-wrap,
+  .mfp-ready,
+  #t4s-menu-drawer,
+  .t4s-drawer-menu__close {
+    display: none;
+  }
+
+  .mms__simple-el-wrapper {
+    position: relative;
+  }
+
+  .mms__simple-el-wrapper .mms__block {
+    width: fit-content;
+    display: block;
+    border-radius: 0;
+    max-width: unset;
+  }
+
+  .mms__simple-el-wrapper .mms__block-inner {
+    position: relative;
+  }
+
+  .mms__simple-el-wrapper .mms__left {
+    width: auto;
+    white-space: nowrap;
+    border: 0;
+    border-radius: 4px 0 0 4px;
+    background: white;
+    color: black;
+    z-index: 1;
+  }
+
+  .mms__simple-el-wrapper .mms__left-title {
+    color: black;
+  }
+
+  .mms__simple-el-wrapper .mms__left-title.active {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .mms__simple-el-wrapper .mms__right {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    white-space: nowrap;
+    background: white;
+    border-radius: 0;
+    color:black;
+    box-shadow: 0 5px 20px #0000004d;
+    width: auto;
+  }
+
+  .mms__simple-el-wrapper .mms__right.show-on-left {
+    right: 100%;
+    left: unset;
+  }
+
+  .menu-drawer__inner-link {
+    color: black;
+  }
+
+  .mms__simple-el-wrapper .menu-collection-cards {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .mms__single-mega {
+    width: {{ section.settings.max_width | times: 0.75 }}px;
+    padding: 20px 32px;
+    margin: 0 auto;
+  }
+
+  .pipe {
+    color: var(--accent);
+    cursor: default;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .mms {
+      display: none;
+    }
+  }
+</style>
+
+<div class="mms">
+  {% for block in section.blocks %}
+    {% assign i = forloop.index0 %}
+    {% assign menu = block.settings.menu %}
+    <div class="mms__el-wrapper {% if block.type == "dropdown" %}mms__simple-el-wrapper{% endif %}">
+      {% liquid
+        if block.type == 'pipe'
+          assign is_pipe = true
+        else
+          assign is_pipe = false
+        endif
+      %}
+      {% if is_pipe %}
+        <div class="mms__top-link pipe" style="margin-bottom: 3px;">|</div>
+      {% else %}
+        <a
+          class="mms__top-link"
+          href="{{ block.settings.main_nav_link }}"
+          {% if menu != blank %}
+            data-link-id="{{ i }}"
+          {% endif %}
+        >
+          {{ block.settings.main_nav_text }}
+        </a>
+        {% if menu != blank %}
+          <div class="mms__block" data-link-id="{{ i }}">
+            <div class="mms__block-inner">
+              {% if block.type == 'single_mega' %}
+                <div class="mms__single-mega">
+                  {% render 'menu-collection-cards', links: menu.links, block: block %}
+                </div>
+              {% elsif block.type == 'mega_menu_text' %}
+                {% render 'mega-menu-text-block', menu: menu %}
+              {% else %}
+                <div class="mms__left">
+                  {% for link in menu.links %}
+                    {% if link.links != blank %}
+                      {% assign j = forloop.index0 %}
+                      <div
+                        class="mms__left-title {% if forloop.first %}active{% endif %}"
+                        href="{{ link.url }}"
+                        data-collection-id="{{ j }}"
+                      >
+                        {{ link.title }}
+                      </div>
+                    {% else %}
+                      <a class="mms__left-title" href="{{ link.url }}">{{ link.title }}</a>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+                <div class="mms__right">
+                  {% for link in menu.links %}
+                    {% if link.links != blank %}
+                      {% assign j = forloop.index0 %}
+                      <div
+                        class="mms__right-block {% if forloop.first %}active{% endif %}"
+                        data-collection-id="{{ j }}"
+                      >
+                        {% render 'menu-collection-cards', links: link.links, block: block, parent_link: link %}
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+
+<script>
+  const topLinks = document.querySelectorAll('.mms__top-link');
+  const leftTitles = document.querySelectorAll('.mms__left-title');
+
+  topLinks.forEach((link) =>
+    link.addEventListener('mouseenter', function () {
+      resetBlocks();
+      const id = link.dataset.linkId;
+      hideAll('.mms__top-link');
+      link.classList.add('active');
+      hideAll('.mms__block');
+      const megaBlock = document.querySelector(".mms__block[data-link-id='" + id + "']");
+      if (megaBlock) megaBlock.classList.add('active');
+    })
+  );
+
+  document.querySelector('.mms__wrapper').addEventListener('mouseleave', () => {
+    hideAll('.mms__block');
+    hideAll('.mms__top-link');
+    leftTitles[0].classList.add('active');
+    document.querySelector('.mms__right-block').classList.add('active');
+    resetBlocks();
+  });
+
+  leftTitles.forEach((title) =>
+    title.addEventListener('mouseenter', function () {
+      const collectionId = title.dataset.collectionId;
+      hideAll('.mms__right-block');
+      hideAll('.mms__left-title');
+      title.classList.add('active');
+      const block = title.closest('.mms__block');
+      const rightSide = block.querySelector(".mms__right-block[data-collection-id='" + collectionId + "']");
+      if (!rightSide) return;
+      rightSide.classList.toggle('active');
+      const distanceToRHSScreen = window.innerWidth - block.getBoundingClientRect().right;
+      rightSide
+        .closest('.mms__right')
+        .classList.toggle('show-on-left', distanceToRHSScreen - 20 < rightSide.offsetWidth);
+    })
+  );
+
+  function resetBlocks() {
+    hideAll('.mms__left-title');
+    hideAll('.mms__right-block');
+    document.querySelectorAll('.mms__el-wrapper').forEach((block) => {
+      if (block.classList.contains('mms__simple-el-wrapper')) return;
+      block.querySelectorAll("[data-collection-id='0']").forEach((el) => el.classList.add('active'));
+    });
+  }
+
+  function showAll(selector) {
+    document.querySelectorAll(selector).forEach((el) => el.classList.add('active'));
+  }
+
+  function hideAll(selector) {
+    document.querySelectorAll(selector).forEach((el) => el.classList.remove('active'));
+  }
+</script>

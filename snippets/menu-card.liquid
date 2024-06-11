@@ -1,0 +1,21 @@
+{% liquid
+  case link.type
+    when 'collection_link'
+      assign image = link.object.image
+    when 'product_link'
+      assign image = link.object.featured_image
+  endcase
+  if link.object.metafields.custom.menu_image != blank
+    assign image = link.object.metafields.custom.menu_image
+  endif
+%}
+
+<a class="menu-collection-card" href="{{ link.url }}">
+  {% if image %}{{ image | image_url: width: 500 | image_tag: class: "menu-collection-card__image" }}{% endif %}
+  <div class="menu-collection-card__title">
+    {{ link.title }}
+  </div>
+  {% if link.object.metafields.custom.menu_sub_text != blank %}
+    <div class="menu-collection-card__subtitle">{{ link.object.metafields.custom.menu_sub_text }}</div>
+  {% endif %}
+</a>

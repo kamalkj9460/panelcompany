@@ -1,0 +1,128 @@
+/*-----------------------------------------------------------------------------/
+/ Custom Theme CSS
+/-----------------------------------------------------------------------------*/
+/*---------------- Global Custom CSS -------------------*/
+.samplebut {
+  font-size: 16px;
+  font-weight: Bold;
+  color: black;
+  padding-bottom: 10px;
+}
+
+.viewbutton {
+  background-color: #2f2d29;
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: left;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.t4s-sticky-atc__atc t4s-btn-loading__svg is--animated t4s-ani-shake{
+
+background-color: #2f2d29;
+}
+
+/*---------------- Custom CSS for only desktop -------------------*/
+@media (min-width: 1025px) {
+  
+}
+
+/*---------------- Custom CSS for tablet, mobile -------------------*/
+@media (max-width: 1024px) {
+  
+}
+
+/*---------------- Custom CSS for only tablet -------------------*/
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+}
+
+/*---------------- Custom CSS for only mobile -------------------*/
+@media (max-width: 767px){
+  
+}
+
+.desc-wrapper:not(.open) .show-full-desc {
+  display: none;
+}
+
+.desc-wrapper.open .show-short-desc {
+  display: none;
+}
+
+.show-short-desc,
+.show-full-desc {
+  display: block;
+  cursor: pointer;
+}
+
+.menu-drawer summary::-webkit-details-marker { display: none }
+
+@media screen and (min-width: 1025px) {
+  .t4s-btn-filter-wrapper .t4s-btn-filter {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1025px) {
+  .t4s-btn-sidebar {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .t4s-collection-header {
+    position: sticky;
+    top: 0;
+    z-index: 468;
+    background: #fff;
+    transition: background .25s;
+  }
+  
+  body:has(.t4s-drawer[aria-hidden=false]) .t4s-collection-header,
+  .t4s-collection-header:has(.t4s-dropdown__wrapper.is--opened) {
+    background: transparent;
+  }
+
+  .t4s-collection-header::after {
+    transition: opacity .25s;
+    opacity: 0;
+    content: '';
+    position: fixed;
+    width: 100vw;
+    height: 100dvh;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background: #000000b3;
+    pointer-events: none;
+  }
+
+  body:has(.t4s-drawer[aria-hidden=false]) .t4s-collection-header::after,
+  .t4s-collection-header:has(.t4s-dropdown__wrapper.is--opened)::after {
+    opacity: 1;
+  }
+
+  .t4s-product__title {
+    --title-size: 24px !important;
+    text-align: left !important;
+    padding: 0 calc(var(--ts-gutter-x) * .5);
+    padding-bottom: 12px !important;
+  }
+
+  .t4s-product__info-container .t4s-product-price {
+    --price-size: 24px !important;
+    text-align: left !important;
+  }
+}
+
+footer .t4s_nt_se_footer {
+  padding-top: 0 !important;
+}
+footer .t4s_se_collections-list-carousel {
+  margin-bottom: 0 !important;
+}

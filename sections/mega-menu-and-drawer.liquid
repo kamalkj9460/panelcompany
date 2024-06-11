@@ -1,0 +1,158 @@
+<div class="mms__wrapper">{% render 'mega-menu' %}</div>
+{% render 'menu-drawer' %}
+
+{% schema %}
+{
+  "name": "Mega Menu + Menu Drawer",
+  "settings": [
+    {
+      "id": "max_width",
+      "type": "number",
+      "label": "Max Width (px)",
+      "default": 1200
+    },
+    {
+      "id": "menu",
+      "type": "link_list",
+      "label": "Menu"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Mega Menu Block",
+      "type": "mega_menu",
+      "settings": [
+        {
+          "id": "menu",
+          "type": "link_list",
+          "label": "Menu"
+        },
+        {
+          "id": "main_nav_text",
+          "type": "text",
+          "label": "Main Nav Text"
+        },
+        {
+          "id": "main_nav_link",
+          "type": "url",
+          "label": "Main Nav Link"
+        }
+      ]
+    },
+    {
+      "name": "Mega Menu Text",
+      "type": "mega_menu_text",
+      "settings": [
+        {
+          "id": "menu",
+          "type": "link_list",
+          "label": "Menu"
+        },
+        {
+          "id": "main_nav_text",
+          "type": "text",
+          "label": "Main Nav Text"
+        },
+        {
+          "id": "main_nav_link",
+          "type": "url",
+          "label": "Main Nav Link"
+        }
+      ]
+    },
+    {
+      "name": "Single Mega",
+      "type": "single_mega",
+      "settings": [
+        {
+          "id": "menu",
+          "type": "link_list",
+          "label": "Menu"
+        },
+        {
+          "id": "main_nav_text",
+          "type": "text",
+          "label": "Main Nav Text"
+        },
+        {
+          "id": "main_nav_link",
+          "type": "url",
+          "label": "Main Nav Link"
+        },
+        {
+          "id": "buying_guide_text",
+          "type": "text",
+          "label": "Buying Guide Text"
+        },
+        {
+          "id": "buying_guide_link",
+          "type": "url",
+          "label": "Buying Guide Link"
+        }
+      ]
+    },
+    {
+      "name": "Dropdown",
+      "type": "dropdown",
+      "settings": [
+        {
+          "id": "menu",
+          "type": "link_list",
+          "label": "Menu"
+        },
+        {
+          "id": "main_nav_text",
+          "type": "text",
+          "label": "Main Nav Text"
+        },
+        {
+          "id": "main_nav_link",
+          "type": "url",
+          "label": "Main Nav Link"
+        }
+      ]
+    },
+    {
+      "name": "Link",
+      "type": "link",
+      "settings": [
+        {
+          "id": "main_nav_text",
+          "type": "text",
+          "label": "Main Nav Text"
+        },
+        {
+          "id": "main_nav_link",
+          "type": "url",
+          "label": "Main Nav Link"
+        }
+      ]
+    },
+    {
+      "name": "Pipe",
+      "type": "pipe"
+    },
+    {
+      "name": "Mobile Menu Links",
+      "type": "mobile_menu_links",
+      "settings": [
+        {
+          "id": "menu",
+          "type": "link_list",
+          "label": "Menu"
+        },
+        {
+          "id": "text_color",
+          "type": "color",
+          "label": "Text Color"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mega Menu (SEO)"
+    }
+  ]
+}
+{% endschema %}

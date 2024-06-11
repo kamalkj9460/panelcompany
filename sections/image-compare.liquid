@@ -1,0 +1,96 @@
+{% schema %}
+{
+  "name": "Image Compare Slider",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "After Image"
+    }
+     ],
+  "presets": [{
+    "name": "image compare",
+    "category": "image"
+  }]
+}
+  
+{% endschema %}
+
+{% stylesheet %}
+/* Add your CSS styles here */
+.slider-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slider-handle {
+  position: absolute;
+  z-index: 1;
+  cursor: ew-resize;
+  width: 40px;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+}
+
+.before-image {
+  width: 100%;
+  height: auto;
+}
+
+.after-image {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+{% endstylesheet %}
+
+{% javascript %}
+/* Add your JavaScript/jQuery code here */
+$(document).ready(function() {
+  var sliderContainer = $('.slider-container');
+  var sliderHandle = $('.slider-handle');
+  var beforeImage = $('.before-image');
+  var afterImage = $('.after-image');
+
+  var dragging = false;
+
+  sliderHandle.on('mousedown', function(e) {
+    dragging = true;
+  });
+
+  $(document).on('mouseup', function(e) {
+    dragging = false;
+  });
+
+  sliderContainer.on('mousemove', function(e) {
+    if (dragging) {
+      var offsetX = e.pageX - sliderContainer.offset().left;
+      var newPosition = offsetX / sliderContainer.width() * 100;
+
+      if (newPosition >= 0 && newPosition <= 100) {
+        sliderHandle.css('left', newPosition + '%');
+        beforeImage.css('width', newPosition + '%');
+        afterImage.css('left', newPosition + '%');
+      }
+    }
+  });
+});
+{% endjavascript %}
+
+
+<div class="slider-container">
+  <img src="{{ section.settings.before_image | img_url: 'large' }}" alt="Before" class="before-image">
+  <img src="{{ section.settings.after_image | img_url: 'large' }}" alt="After" class="after-image">
+  <div class="slider-handle"></div>
+</div>
+

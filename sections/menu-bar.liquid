@@ -1,0 +1,72 @@
+<style>
+  .menu-bar-wrapper {
+    background-color: #2f2d29;
+    padding: 8px 8px 0;
+    font-weight: 500;
+  }
+  .menu-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu-bar-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    text-transform: none;
+  }
+
+  .menu-bar-link {
+    color: white;
+  }
+
+  .menu-bar-separator {
+    color: var(--accent-color);
+  }
+
+  @media screen and (max-width: 767px) {
+    .menu-bar-wrapper {
+      display: none;
+    }
+  }
+</style>
+
+<div class="menu-bar-wrapper">
+  <div class="t4s-container menu-bar">
+    {% for block in section.blocks %}
+      <div class="menu-bar-block">
+        {% for link in block.settings.menu.links %}
+          {% assign title = link.title %}
+          {% if link.url contains "register" and customer %}{% continue %}{% endif %}
+          {% if link.url contains "login" and customer %}{% assign title = "Account" %}{% endif %}
+          <a class="menu-bar-link" href="{{ link.url }}">{{ title }}</a>
+          {% unless forloop.last %}
+            <div class="menu-bar-separator">|</div>
+          {% endunless %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Menu Bar",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "link-list",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

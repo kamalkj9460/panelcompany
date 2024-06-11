@@ -1,0 +1,5 @@
+/*! Code css #t4s_custom_color */ 
+
+.bg_color_light-grey {--t4s-bg-color: #ddd;}
+.bg_color_dark-grey {--t4s-bg-color: #636363;}
+.bg_color_mint-green {--t4s-bg-color: #98FF98;}

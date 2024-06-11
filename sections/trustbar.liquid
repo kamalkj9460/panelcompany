@@ -1,0 +1,204 @@
+<style>
+  .trustbar {
+    padding: 10px 0;
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+  }
+
+  .trustbar .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+  .trustbar .trustbar-item {
+    flex-basis: 22%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+  }
+  .trustbar .trustbar-divider {
+    flex-basis: 4%;
+    position: relative;
+    text-align: center;
+  }
+  .trustbar .trustbar-divider::after {
+    height: 75%;
+    min-width: 1px;
+    background: {{section.settings.divider_color}};
+    content: '';
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    margin: auto;
+  }
+  .trustbar .container > div .trustbar-divider:last-of-type {
+    display: none;
+  }
+  .trustbar .trustbar-item img {
+    margin-bottom: 0px;
+  }
+  .trustbar .trustbar-item p {
+    padding: 0px;
+    font-size: 10px;
+    line-height: 16px;
+    margin: 0;
+  }
+  .trustbar p {
+    color: {{section.settings.text_color}};
+  }
+  .trustbar .line1 p {
+    font-weight: bold;
+  }
+  .trustbar .line1,
+  .trustbar .line2 {
+    text-transform: uppercase;
+  }
+  .trustbar .inner {
+    text-align: left;
+    padding-left: 15px;
+  }
+  @media (min-width: 768px) and (max-width: 1079px) {
+    .trustbar .line2 {
+      display: none;
+    }
+  }
+  @media (max-width: 767px) {
+    .trustbar {
+      position: relative;
+      height: 40px;
+    }
+
+    .trustbar-item {
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      flex-basis: unset;
+      width: 100%;
+    }
+    .trustbar .inner {
+      padding: 0;
+    }
+    .trustbar-item.show {
+      opacity: 1;
+    }
+
+    .trustbar .trustbar .container > div {
+      display: block;
+    }
+    .trustbar .trustbar-divider {
+      display: none;
+    }
+    .trustbar .inner {
+      text-align: center;
+    }
+    .trustbar .trustbar-item img {
+      display: none;
+    }
+  }
+</style>
+
+<div class="trustbar" id="trustbar">
+  <div class="container full clearfix">
+    {% for block in section.blocks %}
+      <a
+        class="trustbar-item {% if forloop.first %}show{% endif %}"
+        href="{{block.settings.url}}"
+        {{ block.shopify_attributes }}
+      >
+        <img src="{{block.settings.image | img_url: '45x45'}}" alt="{{ block.settings.line1 }}">
+        <div class="inner text-left">
+          <div class="line1">{{ block.settings.line1 }}</div>
+          <div class="line2">{{ block.settings.line2 }}</div>
+        </div>
+      </a>
+      {% unless forloop.last %}
+        <div class="trustbar-divider"></div>
+      {% endunless %}
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const trustbarItems = document.querySelectorAll('.trustbar-item');
+    let index = 0;
+    const interval = 2000;
+    setInterval(function () {
+      trustbarItems[index++].classList.remove('show');
+      if (index >= trustbarItems.length) {
+        index = 0;
+      }
+      trustbarItems[index].classList.add('show');
+    }, interval);
+  });
+</script>
+
+<div
+  class="reviews-io-rating-bar-widget"
+  widget-id="4ef7TDzVLtnqo9vr"
+  data-store-name="the-panel-company"
+  lang="en"
+></div>
+<script src="//widget.reviews.io/modern-widgets/rating-bar.js"></script>
+
+{% schema %}
+{
+  "name": "Trustbar",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider Color",
+      "default": "#000000"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_bar",
+      "name": "Trust Bar",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "richtext",
+          "label": "Line 1",
+          "id": "line1",
+          "default": "<p>Line 1</p>"
+        },
+        {
+          "type": "richtext",
+          "label": "Line 2",
+          "id": "line2",
+          "default": "<p>Line 2</p>"
+        },
+        {
+          "type": "url",
+          "label": "Url",
+          "id": "url"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

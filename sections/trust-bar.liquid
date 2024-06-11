@@ -1,0 +1,149 @@
+  <div id="trustbar">
+  <div class="container full clearfix">
+    <div class="nine center">
+	{% for block in section.blocks %}
+      {% if block.type == "trust_bar" %}
+          <div class="trustbar-item" onclick="window.location='{{block.settings.url}}'">
+              <img src="{{block.settings.image | img_url: '45x45'}}" alt="{{ block.settings.line1 }}" />
+              <div class="inner text-left">
+                <div class="line1">{{ block.settings.line1 }}</div>
+                <div class="line2">{{ block.settings.line2 }}</div>
+            </div>
+          </div>
+      <div class="trustbar-divider"></div>
+  		{% endif %}
+	{% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  
+  
+    {
+        "name": "Trust Bar",
+        "limit": 2,
+        "settings": [
+          {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+          },
+          {
+            "type": "richtext",
+            "label": "Line 1",
+            "id": "line1",
+	    	"default": "<p>Line 1</p>"
+          },
+          {
+            "type": "richtext",
+            "label": "Line 2",
+            "id": "line2",
+	    	"default": "<p>Line 2</p>"
+          },
+          {
+            "type": "url",
+            "label": "Url",
+            "id": "url"
+          }
+]
+}
+  
+        
+{% endschema %}
+
+{% style %}
+
+#trustbar {
+  margin: 10px auto;
+
+  .container > div {
+    display: flex;
+  }
+
+  .trustbar-item {
+    flex-basis: 22%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .trustbar-divider {
+    flex-basis: 4%;
+    position: relative;
+ 	
+    &::after {
+      height: 75%;
+      min-width: 1px;
+      background: #111;
+      content: "";
+      display: inline-block;
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      margin: auto;
+    }
+  }
+
+  .container > div .trustbar-divider:last-of-type {
+    display: none;
+  }
+
+  .trustbar-item img {
+    margin-bottom: 0px;
+  }
+
+  .trustbar-item p {
+    padding: 0px;
+    font-size: 10px;
+    line-height: 16px
+  }
+
+  .line1 p {
+    font-weight: bold;
+  }
+
+  .line1, .line2 {
+    text-transform: uppercase;
+  }
+
+  .inner {
+    text-align: left;
+    flex-basis: calc(100% - 42px);
+    padding-left: 15px;
+  }
+
+  @media(min-width: 768px) and (max-width: 1079px) {
+    .line2 {
+      display: none;
+    }
+  }
+  @media(max-width: 767px) {
+    #trustbar .container > div {
+      display: block;
+    }
+    .trustbar-divider {
+      display: none;
+    }
+    .trustbar-item {
+      flex-basis: unset;
+      width: 100%;
+      display: none;
+    }
+    .inner {
+      text-align: center
+    }
+
+    .trustbar-item img {
+      display: none;
+    }
+    .trustbar-item p {
+      font-size: 1rem;
+      line-height: 1.2rem
+    }
+    .line2 p {
+      font-size: 0.7rem
+    }
+  }
+}
+{% endstyle %}

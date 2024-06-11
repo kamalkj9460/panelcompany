@@ -1,0 +1,144 @@
+<style>
+  .menu-drawer {
+    position: fixed;
+    left: 0;
+    transform: translateX(-100%);
+    transition: 200ms;
+    top: 0;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    width: 90%;
+    color: black;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-drawer * {
+    color: black;
+  }
+
+  .menu-drawer a {
+    display: flex;
+  }
+
+  .menu-drawer details > div {
+    margin: 12px 0 20px;
+  }
+
+  .menu-drawer.open {
+    transform: translateX(0);
+  }
+
+  .menu-drawer__top {
+    width: 100%;
+    background: #2f2d29;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .menu-drawer__close {
+    color: white;
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+  .menu-drawer__links {
+    padding: 20px;
+    font-size: 18px;
+    overflow-y: auto;
+  }
+
+  .menu-drawer__collection-cards {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .level-2 summary, 
+  .level-2__link {
+    font-size: 18px;
+  }
+
+  .menu-drawer .accordion__content {
+    padding-left: 8px;
+  }
+
+  .bold,
+  .bold-summary > summary {
+    font-weight: bold;
+  }
+
+  .menu-drawer__inner-link {
+    grid-column: -1 / 1;
+    font-size: 16px;
+  }
+</style>
+
+<div class="menu-drawer__top">
+  <div></div>
+  <div class="menu-drawer__close">&#x2715;</div>
+</div>
+
+<div class="menu-drawer__links">
+  {% for link in section.settings.menu.links %}
+    {% if link.title == "|" %}{% continue %}{% endif %}
+    {% if link.links != blank %}
+      {% capture content %}
+        {% for link_2 in link.links %}
+          {% if link_2.links != blank %}
+            {% capture content_2 %}
+              <div class="menu-drawer__collection-cards">
+                {% for link_3 in link_2.links %}
+                  {% if link_3.type == "collection_link" %}
+                  {% render 'menu-collection-card', collection: link_3.object %}
+                  {% else %}
+                    <a class="menu-drawer__inner-link" href="{{ link_3.url }}">{{ link_3.title }}</a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endcapture %}
+            {% render "accordion", title: link_2.title, content: content_2, classes: "level-2" %}
+          {% else %}
+            <a class="level-2__link" href="{{ link_2.url }}">{{ link_2.title }}</a>
+          {% endif %}
+        {% endfor %}
+      {% endcapture %}
+      {% render "accordion", title: link.title, content: content, classes: "bold-summary" %}
+    {% else %}
+      <a class="bold" href="{{ link.url }}">{{ link.title }}</a>
+    {% endif %}
+  {% endfor %}
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuDrawerTrigger = document.querySelector("[data-menu-drawer]");
+    const menuDrawerClose = document.querySelector(".menu-drawer__close");
+    const menuDrawer = document.querySelector(".menu-drawer");
+    menuDrawerTrigger.addEventListener("click", function() {
+      menuDrawer.classList.add("open")
+    })
+  
+    document.querySelectorAll(".t4s-close-overlay, .menu-drawer__close").forEach(el => el.addEventListener("click", function() {
+      menuDrawer.classList.remove("open")
+      document.querySelector(".t4s-close-overlay").classList.remove("is--visible")
+    }))
+  })
+</script>
+
+{% schema %}
+  {
+    "name": "Menu Drawer",
+    "class": "menu-drawer",
+    "settings": [
+      {
+        "id": "menu",
+        "type": "link_list",
+        "label": "Menu"
+      }
+    ]
+  }
+{% endschema %}

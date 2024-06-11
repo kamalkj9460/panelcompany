@@ -1,0 +1,24 @@
+<div class="menu-collection-cards">
+  {% for link in links %}
+    {% if block.type == "mega_menu" or block.type == "single_mega" %}
+      {% render 'menu-card', link: link %}
+    {% else %}
+      <a class="menu-drawer__inner-link" href="{{ link.url }}">{{ link.title }}</a>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% liquid
+  assign buying_link = parent_link.object.metafields.custom.buying_guide_link
+  assign buying_text = parent_link.object.metafields.custom.buying_guide_text
+  if block.settings.buying_guide_text != blank and block.settings.buying_guide_link != blank
+    assign buying_text = block.settings.buying_guide_text
+    assign buying_link = block.settings.buying_guide_link
+  endif
+%}
+{% if buying_link and buying_text %}
+  <a class="menu__buying-guide" href="{{ buying_link }}">
+    <span>{% render 'icon-question' %}</span>
+    <span>{{ buying_text }}</span>
+  </a>
+{% endif %}

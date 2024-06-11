@@ -1,0 +1,60 @@
+<style>
+  .mms__menu-text {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 40px;
+  }
+
+  .mms__menu-text-list {
+    min-width: 120px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: black;
+  }
+
+  .mms__menu-text-heading {
+    font-weight: bold;
+  }
+
+  .mms__menu-text-list a {
+    color: black;
+    display: block;
+    font-size: 14px;
+  }
+
+  .mms__menu-text-list a:hover {
+    color: var(--accent);
+  }
+
+  .mms__menu-text-link {
+    margin-left: 4px;
+  }
+
+  .mms__menu-text.column {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .mms__el-wrapper:has(.mms__menu-text.column) {
+    position: relative;
+  }
+
+  .mms__block:has(.mms__menu-text.column) {
+    width: 240px;
+    max-width: unset;
+    text-align: right;
+  }
+</style>
+
+<div class="mms__menu-text {% if menu.links.size < 4 %}column{% endif %}">
+  {% for link in menu.links %}
+    <div class="mms__menu-text-list">
+      <a class="mms__menu-text-heading" href="{{link.url}}">{{ link.title }}</a>
+      {% for link_2 in link.links %}
+        <a class="mms__menu-text-link" href="{{link_2.url}}">{{ link_2.title }}</a>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
