@@ -1,0 +1,57 @@
+<div id="shopify-block-10830403595879607806" class="shopify-block shopify-app-block">
+<script>
+      var reviewsIoStore = 'panel-company.myshopify.com';
+      var reviewsIoEnableSyndication = false;
+      var reviewsIoLang = 'en';
+</script>
+</div>
+<div id="shopify-block-15316669992541710076" class="shopify-block shopify-app-block"><script type="lazyload_int" data-src="https://widget.reviews.io/rating-snippet/dist.js"></script>
+<link rel="stylesheet" data-href="https://widget.reviews.io/rating-snippet/dist.css" />
+<script type="lazyload_int">
+    window.addEventListener('DOMContentLoaded', (event) => {
+      loadReviewsIoRatingSnippets();
+    });
+    var loadReviewsIoRatingSnippets = function () {
+      if(typeof reviewsIoStore !== 'undefined') {
+        ratingSnippet("ruk_rating_snippet",{
+            store: reviewsIoStore,
+            color: '#000',
+            textClr: '#333',
+            linebreak: false,
+            usePolaris: true,
+            text: 'Reviews',
+            lang: reviewsIoLang,
+            mode: 'default',
+            showEmptyStars: false,
+            enableSyndication: reviewsIoEnableSyndication
+        });
+      }
+    } 
+</script>
+</div>
+<script>
+    var site_nav_link_burger = true;
+    document.addEventListener("DOMContentLoaded", function() {
+        var icon_menu = document.querySelector("[data-menu-drawer]");
+        icon_menu.addEventListener("click", function() {
+            if(site_nav_link_burger) {
+                event.preventDefault();
+                site_nav_link_burger = false;
+            }
+        });
+    }) 
+</script>
+<script type="lazyload_int">
+  document.addEventListener('DOMContentLoaded', function () {
+      var youtubeIframes = document.querySelectorAll('iframe.lazyyoutube');
+  
+      youtubeIframes.forEach(function (youtubeIframe) {
+          var dataSrcValue = youtubeIframe.getAttribute('data-src');
+  
+          if (dataSrcValue) {
+              youtubeIframe.setAttribute('src', dataSrcValue);
+              youtubeIframe.removeAttribute('data-src');
+          }
+      });
+  });
+  </script>

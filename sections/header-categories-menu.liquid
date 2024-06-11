@@ -296,7 +296,7 @@
             </div>
           {%- endif -%}
           <div class="t4s-col t4s-col-item">{%- render 'menu_blocks', admin_sp: admin_sp, se_blocks: se_blocks, se_stts: se_stts -%}</div>
-          {%- if se_stts.text != blank %}<div class="t4s-col-3 t4s-text-end t4s-col-item t4s-h-cat__html t4s-rte">{{ se_stts.text }}</div>{% endif -%}
+          {%- if se_stts.text != blank %}<div class="t4s-col-3 t4s-text-end t4s-col-item t4s-h-cat__html t4s-rte">{{ se_stts.text | replace: '<script src="https://widget.reviews.co.uk', '<script type="lazyload_int" data-src="https://widget.reviews.co.uk'| replace: '<script>', '<script type="lazyload_int">'}}</div>{% endif -%}
       </div>
     </div>
   </div>

@@ -1,0 +1,59 @@
+<style>
+html:not(.w3_start) .t4s-slideshow .t4s-slideshow-item:nth-child(n+2) img{
+    opacity: 0 !important;
+}
+.t4s-lz--fadeIn {
+    opacity: 1 !important;
+    transition: none !important;
+}
+.lazyloadt4s+.lazyloadt4s-loader, .lazyloadt4sing+.lazyloadt4s-loader .lazyloadt4s+.lazyloadt4s-loader, .lazyloadt4sing+.lazyloadt4s-loader, .lazyloadt4sNative:not(.lazyloadt4sed)+.lazyloadt4s-loader, .t4s-product-main-img.lazyloadt4s~.lazyloadt4s-loader, .t4s-product-main-img.lazyloadt4sing~.lazyloadt4s-loader {
+    visibility: hidden !important;
+}
+/* iframe#preview-bar-iframe {
+    display: none;
+} */
+html:not(.jsload) .t4s-carousel__nav-scroller img {
+    opacity: 1 !important;
+    transition: none !important;
+}
+html:not(.jsload) .t4s-product__thumb-item:first-child {
+    opacity: 1 !important;
+}
+@media (prefers-reduced-motion: no-preference){
+.hdt-reveal-in-view [hdt-reveal=slide-in]:not(.hdt-reveal--offscreen,[animationend]) {
+    animation: none !important;
+    animation-delay: calc(var(--animation-order) * 75ms);
+}
+{% unless canonical_url contains '/blogs' %}
+.hdt-reveal-in-view [hdt-reveal=slide-in]:not([animationend]) {
+    transform: none !important;
+}
+{% else %}
+  .hdt-reveal-in-view .t4s-flicky-slider:not(.flickityt4s-enabled) [hdt-reveal=slide-in]:not([animationend]) {
+    transform: none !important;
+}
+{% endunless %}
+.hdt-reveal-in-view :where([hdt-reveal=fade-in],[hdt-reveal=slide-in]):not([animationend]) {
+    opacity: 1 !important;
+}}
+html:not(.jsload) button.t4s-btn-filter {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+@media (max-width: 575px){
+html:not(.jsload) .reviews-io-rating-bar-widget {
+    min-height: 71.59px;
+}
+.t4s-header__logo img {
+    display: block;
+}}
+@media (min-width: 1200px){
+html:not(.jsload) .reviews-io-rating-bar-widget {
+    min-height: 49px;
+}
+html:not(.jsload) .t4s-pr_delivery:has(.t4s-start_delivery:empty) {
+    min-height: 48.59px;
+    display: block;
+}
+}
+</style>

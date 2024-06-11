@@ -335,7 +335,20 @@ endif -%}
               <div data-thumb__scroller="{{ se_id }}" class="t4s-carousel__nav-scroller is__position-{{ media_layout | remove: 'thumbnails_' }}">
                 <div class="t4s-row t4s-row-mt t4s-row-cols-4 t4s_{{ image_ratio }} t4s_position_{{ se_stts.image_position }} t4s_{{ se_stts.image_size }} {{ class_gx_lg }}t4s-g-5 t4s-carousel__nav carousel__nav--{{ se_id }} carousel__nav-hover1">
                   {%- for media in product_media limit: 4 %}{% assign image = media.preview_image -%} 
-                    <div class="t4s-col-item t4s-product__thumb-item"><div class="t4s_ratio t4s-product__thumb" {{ imgatt }}style="--aspect-ratioapt:{{ image.aspect_ratio }}"></div></div>
+                    <div class="t4s-col-item t4s-product__thumb-item"><div class="t4s_ratio t4s-product__thumb" {{ imgatt }}style="--aspect-ratioapt:{{ image.aspect_ratio }}">
+                    <div
+                        class="t4s_ratio t4s-carousel__nav-inner t4s-bg-11"
+                        style=""
+                      >
+                        <img alt="" loading="lazy"
+                        class="lazyloadt4s" data-src="{{ image | image_url }}" data-mob-src="{{ image | image_url: width: 360 }}" data-widths="[80, 120, 160 ,180, 360,
+                        540]" data-optimumx="1.8" data-sizes="auto" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" data-class="LazyLoad"><span
+                          class="t4s-thumbnail__badge t4s-not-style t4s-op-0"
+                          aria-hidden="true"
+                          ></span
+                        >
+                      </div>
+                      </div></div>
                   {%- endfor -%}
                 </div>
               </div>
